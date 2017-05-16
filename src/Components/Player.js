@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CssMotion from './CssMotion';
+import './Player.css';
 
 class Player extends Component {
   constructor(props) {
@@ -9,7 +10,6 @@ class Player extends Component {
     };
   }
   render() {
-    const left = (this.props.mode === 3 ? (Date.now() - this.props.leftStart) + 60 : 60).toFixed();    
     return (
       <div>
         <div>Hi Im a player</div>
@@ -17,9 +17,10 @@ class Player extends Component {
           width="30"
           height="30"
           bottom="100"
-          left={left}
-          degree="0"
-          color="rgb(255, 0, 0)"
+          left="60"
+          color="rgb(255, 26, 26)"
+          degree=""
+          animation={this.state.animation}
         />
       </div>
     );
