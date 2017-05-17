@@ -50,6 +50,10 @@ class GameDisplay extends Component {
       // event.preventDefault();
       if (this.state.mode === -1) {
         console.log('new Game');
+        const styleSheet = document.styleSheets[0];
+        for (let i = 0; i < 5; i += 1) {
+          styleSheet.deleteRule(0);
+        }
         this.props.newGame();
       } else if (this.state.mode === 0) {
         this.setState({ mode: 1 });
@@ -133,7 +137,7 @@ class GameDisplay extends Component {
     this.setState({ index: index + 1 });
     const styleSheet = document.styleSheets[0];
     // styleSheet.deleteRule(0);
-    for (let i = 0; i < 5; ++i) {
+    for (let i = 0; i < 5; i += 1) {
       styleSheet.deleteRule(0);
     }
     // styleSheet.deleteRule(3);
@@ -149,7 +153,7 @@ class GameDisplay extends Component {
   render() {
     return (
       <div className="gameDisplay">
-        <div>Score: {this.state.index}</div>
+        <div className="scoreText">Score: {this.state.index}</div>
         <div>
           {this.state.blocks.map((bl, id) => <Block
             ref={(instance) => { this[`childB${id}`] = instance; }}
@@ -169,6 +173,9 @@ class GameDisplay extends Component {
         <Player
           ref={(instance) => { this.childPlayer = instance; }}
         />
+        <div>
+          {this.state.mode < 0 ? <div className="startText">Game Over</div> : null}
+        </div>
       </div>
     );
   }
