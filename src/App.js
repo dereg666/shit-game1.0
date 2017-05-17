@@ -4,16 +4,22 @@ import GameDisplay from './Components/GameDisplay';
 
 class App extends Component {
   constructor() {
-    super()
-    
+    super();
+    this.state = {
+      status: 0,
+    };
+    this.newGame = this.newGame.bind(this);
+  }
+  newGame() {
+
   }
   render() {
-    const hello = 'hello';
     return (
       <div className="App">
-        <div> app </div>
         <div>
-          <GameDisplay />
+          <GameDisplay
+            newGame={this.newGame}
+          />
         </div>
       </div>
     );

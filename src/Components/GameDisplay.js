@@ -9,7 +9,7 @@ class GameDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: -1,
+      mode: 0,
       pillars: [],
       blocks: [],
       index: 0,
@@ -43,12 +43,14 @@ class GameDisplay extends Component {
     });
     this.setState({ pillars: tempPillar });
     this.setState({ blocks: tempBlock });
-    this.setState({ mode: 0 });
   }
   handleSpace(event) {
     if (event.keyCode === 32) {
       // event.preventDefault();
-      if (this.state.mode === 0) {
+      if (this.state.mode === -1) {
+        console.log('new Game');
+        // this.props.newGame();
+      } else if (this.state.mode === 0) {
         this.setState({ mode: 1 });
         this[`childP${this.state.index}`].pillarGrow();
       } else if (this.state.mode === 1) {
@@ -78,12 +80,12 @@ class GameDisplay extends Component {
   }
   overGo(dis) {
     this.childPlayer.playerFall(dis);
-    // setTimeout(this.gameOver(), 500);
+    setTimeout(this.setState({ mode: -1 }), 500);
   }
   underGo(dis) {
     this.childPlayer.playerFall(dis);
     this[`childP${this.state.index}`].pillarFall();
-    // setTimeout(this.gameOver(), 500);
+    setTimeout(this.setState({ mode: -1 }), 500);
   }
   addElement() {
     const tempBlock = this.state.blocks;
@@ -144,7 +146,7 @@ class GameDisplay extends Component {
   render() {
     return (
       <div className="gameDisplay">
-        <div>hello world</div>
+        <div>Score: {this.state.index}</div>
         <div>
           {this.state.blocks.map((bl, id) => <Block
             ref={(instance) => { this[`childB${id}`] = instance; }}
@@ -168,5 +170,9 @@ class GameDisplay extends Component {
     );
   }
 }
+
+GameDisplay.propTypes = {
+  newGame: PropTypes.func.isRequired,
+};
 
 export default GameDisplay;
