@@ -49,7 +49,7 @@ class GameDisplay extends Component {
       // event.preventDefault();
       if (this.state.mode === -1) {
         console.log('new Game');
-        // this.props.newGame();
+        this.props.newGame();
       } else if (this.state.mode === 0) {
         this.setState({ mode: 1 });
         this[`childP${this.state.index}`].pillarGrow();
