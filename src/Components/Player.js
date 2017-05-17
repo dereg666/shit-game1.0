@@ -16,7 +16,7 @@ class Player extends Component {
     const styleSheet = document.styleSheets[0];
     const keyid = 0;
     // keyid > 0 ? styleSheet.insertRule(keyid - 1) : null;
-    console.log('player move: ', distance);
+    // console.log('player move: ', distance);
     const mykeyframe = `@-webkit-keyframes peopleMoving${keyid} {
       from {
         transform-origin: bottom left;
@@ -50,7 +50,6 @@ class Player extends Component {
   render() {
     return (
       <div>
-        <div>Hi Im a player</div>
         <CssMotion
           width="30"
           height="30"

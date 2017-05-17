@@ -59,7 +59,6 @@ class Pillar extends Component {
   render() {
     return (
       <div>
-        <div>Hi this is a Pillar</div>
         <CssMotion
           width="6"
           height={this.state.height.toString()}

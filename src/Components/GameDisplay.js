@@ -82,7 +82,7 @@ class GameDisplay extends Component {
   }
   wholeMoving() {
     const dis = this.state.blocks[this.state.index + 1].leftPosition + this.state.blocks[this.state.index + 1].width - 110;
-    console.log('distance: ', dis);
+    // console.log('distance: ', dis);
     const leftP = Math.random() * (550 - this.state.blocks[this.state.index + 2].width) + 160;
     this.childPlayer.playerMoveBackward(dis);
     this[`childP${this.state.index}`].pillarMoving(dis);
