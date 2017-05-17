@@ -57,8 +57,12 @@ class GameDisplay extends Component {
     }
   }
   playerMoving() {
+    const dis = this.state.blocks[this.state.index + 1].leftPosition + this.state.blocks[this.state.index + 1].width - 110;
+    const gap = this.state.blocks[this.state.index + 1].leftPosition - 107;
+    const win = this[`childP${this.state.index}`].determineWin(gap, dis + 3);
+    console.log(win);
     this[`childP${this.state.index}`].pillarStopRotate();
-    this.childPlayer.playerMoveForward(this.state.blocks[this.state.index + 1].leftPosition + this.state.blocks[this.state.index + 1].width - 110);
+    this.childPlayer.playerMoveForward(dis);
     this.setState({ mode: 3 });
     this.addElement();
     setTimeout(this.wholeMoving, 1400);

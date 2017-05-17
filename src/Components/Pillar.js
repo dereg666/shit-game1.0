@@ -18,6 +18,7 @@ class Pillar extends Component {
     this.pillarStopRotate = this.pillarStopRotate.bind(this);
     this.pillarMoving = this.pillarMoving.bind(this);
     this.pillarDoneMoving = this.pillarDoneMoving.bind(this);
+    this.determineWin = this.determineWin.bind(this);
   }
   pillarGrow() {
     this.setState({ height: 5 });
@@ -55,6 +56,14 @@ class Pillar extends Component {
     this.setState({ leftPosition: this.state.leftPosition - dis });
     this.setState({ degree: '90' });
     this.setState({ animation: '' });
+  }
+  determineWin(gap, max) {
+    if (this.state.height > max) {
+      return 1;
+    } else if (this.state.height < gap) {
+      return -1;
+    }
+    return 0;
   }
   render() {
     return (
