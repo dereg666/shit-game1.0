@@ -20,6 +20,7 @@ class GameDisplay extends Component {
     this.wholeMoving = this.wholeMoving.bind(this);
     this.addElement = this.addElement.bind(this);
     this.resetNew = this.resetNew.bind(this);
+    this.handleBlockPosition = this.handleBlockPosition.bind(this);
   }
   componentWillMount() {
     window.onkeydown = this.handleSpace;
@@ -76,28 +77,43 @@ class GameDisplay extends Component {
       leftPosition: 0,
     });
     this.setState({ blocks: tempBlock });
+    this.setState({ minSpan: tempSpan });
     this.setState({ pillars: tempPillar });
   }
   wholeMoving() {
     const dis = this.state.blocks[this.state.index + 1].leftPosition + this.state.blocks[this.state.index + 1].width - 110;
+    console.log('distance: ', dis);
+    const leftP = Math.random() * (550 - this.state.blocks[this.state.index + 2].width) + 160;
     this.childPlayer.playerMoveBackward(dis);
     this[`childP${this.state.index}`].pillarMoving(dis);
     this[`childB${this.state.index}`].blockMove(dis, 3);
     this[`childB${this.state.index + 1}`].blockMove(dis, -1);
-    this[`childB${this.state.index + 2}`].blockShowMove();
+    this[`childB${this.state.index + 2}`].blockShowMove(leftP);
     this.setState({ mode: 4 });
-    setTimeout(this.resetNew, 500);
+    setTimeout(() => this.resetNew(dis, leftP), 500);
   }
-  resetNew() {
+  resetNew(dis, leftP) {
     const tempBlock = this.state.blocks;
     const tempPillar = this.state.pillars;
     const index = this.state.index;
+    this.handleBlockPosition(index + 1, -dis);
+    this.handleBlockPosition(index + 2, leftP - 2000);
     delete tempBlock[index];
     if (index > 0) {
       delete tempPillar[index - 1];
     }
     this.setState({ index: index + 1 });
+    const styleSheet = document.styleSheets[0];
+    // styleSheet.deleteRule(0);
+    styleSheet.deleteRule(3);
+    styleSheet.deleteRule(3);
     this.setState({ mode: 0 });
+  }
+  handleBlockPosition(index, dis) {
+    const tempBlock = this.state.blocks;
+    tempBlock[index].leftPosition += dis;
+    this[`childB${index}`].blockReset();
+    this.setState({ blocks: tempBlock });
   }
   render() {
     return (
@@ -112,6 +128,7 @@ class GameDisplay extends Component {
             mode={this.state.mode}
             width={bl.width}
             leftPosition={bl.leftPosition}
+            setPosition={this.handleBlockPosition}
           />)}
         </div>
         <div>

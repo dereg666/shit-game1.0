@@ -26,12 +26,10 @@ class Pillar extends Component {
     this.setState({ height: (Date.now() - this.state.heightStart) / 5 % 600 });
     this.setState({ animation: 'pillarRotate 0.8s linear forwards' });
     this.setState({ heightFixed: true });
-    console.log(this.state.height);
   }
   pillarStopRotate() {
     this.setState({ degree: '90' });
     this.setState({ animation: '' });
-    console.log(this.state.height);
   }
   pillarMoving(distance) {
     // TODO
