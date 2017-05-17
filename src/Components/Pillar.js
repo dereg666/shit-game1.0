@@ -9,6 +9,7 @@ class Pillar extends Component {
     this.state = {
       height: 0,
       animation: '',
+      leftPosition: 107,
       degree: '',
       heightStart: 0,
     };
@@ -16,6 +17,7 @@ class Pillar extends Component {
     this.pillarRotate = this.pillarRotate.bind(this);
     this.pillarStopRotate = this.pillarStopRotate.bind(this);
     this.pillarMoving = this.pillarMoving.bind(this);
+    this.pillarDoneMoving = this.pillarDoneMoving.bind(this);
   }
   pillarGrow() {
     this.setState({ height: 5 });
@@ -49,6 +51,11 @@ class Pillar extends Component {
     styleSheet.insertRule(mykeyframe, keyid);
     this.setState({ animation: 'pillarMoveBack 0.5s linear forwards' });
   }
+  pillarDoneMoving(dis) {
+    this.setState({ leftPosition: this.state.leftPosition - dis });
+    this.setState({ degree: '90' });
+    this.setState({ animation: '' });
+  }
   render() {
     return (
       <div>
@@ -57,7 +64,7 @@ class Pillar extends Component {
           width="6"
           height={this.state.height.toString()}
           bottom="100"
-          left="107"
+          left={this.state.leftPosition.toString()}
           color="rgb(142, 84, 21)"
           degree={this.state.degree.toString()}
           animation={this.state.animation}

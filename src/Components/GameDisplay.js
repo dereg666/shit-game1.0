@@ -98,6 +98,7 @@ class GameDisplay extends Component {
     const index = this.state.index;
     this.handleBlockPosition(index + 1, -dis);
     this.handleBlockPosition(index + 2, leftP - 2000);
+    this[`childP${this.state.index}`].pillarDoneMoving(dis);
     delete tempBlock[index];
     if (index > 0) {
       delete tempPillar[index - 1];
@@ -105,8 +106,11 @@ class GameDisplay extends Component {
     this.setState({ index: index + 1 });
     const styleSheet = document.styleSheets[0];
     // styleSheet.deleteRule(0);
-    styleSheet.deleteRule(3);
-    styleSheet.deleteRule(3);
+    for (let i = 0; i < 5; ++i) {
+      styleSheet.deleteRule(0);
+    }
+    // styleSheet.deleteRule(3);
+    // styleSheet.deleteRule(3);
     this.setState({ mode: 0 });
   }
   handleBlockPosition(index, dis) {
