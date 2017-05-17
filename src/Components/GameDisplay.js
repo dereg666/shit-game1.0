@@ -15,6 +15,8 @@ class GameDisplay extends Component {
       index: 0,
       minSpan: 300,
       maxSpan: 550,
+      typeName: '',
+      typeNameHolder: 'Add name to LeaderBoard',
     };
     this.handleSpace = this.handleSpace.bind(this);
     this.playerMoving = this.playerMoving.bind(this);
@@ -24,6 +26,7 @@ class GameDisplay extends Component {
     this.handleBlockPosition = this.handleBlockPosition.bind(this);
     this.overGo = this.overGo.bind(this);
     this.underGo = this.underGo.bind(this);
+    this.fff = this.fff.bind(this);
   }
   componentWillMount() {
     window.onkeydown = this.handleSpace;
@@ -45,17 +48,29 @@ class GameDisplay extends Component {
     this.setState({ pillars: tempPillar });
     this.setState({ blocks: tempBlock });
   }
+  fff() {
+    this.input.focus();
+  }
   handleSpace(event) {
-    if (event.keyCode === 32) {
+    if (this.state.mode === -1) {
       // event.preventDefault();
-      if (this.state.mode === -1) {
-        console.log('new Game');
+      // const styleSheet = document.styleSheets[0];
+      // for (let i = 0; i < 3; i += 1) {
+      //   styleSheet.deleteRule(0);
+      // }
+      // this.props.newGame();
+      if (event.keyCode === 13) {
         const styleSheet = document.styleSheets[0];
-        for (let i = 0; i < 5; i += 1) {
+        for (let i = 0; i < 3; i += 1) {
           styleSheet.deleteRule(0);
         }
         this.props.newGame();
-      } else if (this.state.mode === 0) {
+      } else {
+        this.setState({ typeName: event.target.value });
+      }
+    } else if (event.keyCode === 32) {
+      // event.preventDefault();
+      if (this.state.mode === 0) {
         this.setState({ mode: 1 });
         this[`childP${this.state.index}`].pillarGrow();
       } else if (this.state.mode === 1) {
@@ -69,8 +84,6 @@ class GameDisplay extends Component {
     let dis = this.state.blocks[this.state.index + 1].leftPosition + this.state.blocks[this.state.index + 1].width - 110;
     const gap = this.state.blocks[this.state.index + 1].leftPosition - 107;
     const [win, pillarDis] = this[`childP${this.state.index}`].determineWin(gap, dis + 3);
-    // console.log(win);
-    // console.log(pillarDis);
     this[`childP${this.state.index}`].pillarStopRotate();
     if (win === 0) {
       this.childPlayer.playerMoveForward(dis);
@@ -153,6 +166,7 @@ class GameDisplay extends Component {
   render() {
     return (
       <div className="gameDisplay">
+        <div className="scoreText">Times: {this.props.index}</div>
         <div className="scoreText">Score: {this.state.index}</div>
         <div>
           {this.state.blocks.map((bl, id) => <Block
@@ -174,7 +188,18 @@ class GameDisplay extends Component {
           ref={(instance) => { this.childPlayer = instance; }}
         />
         <div>
-          {this.state.mode < 0 ? <div className="startText">Game Over</div> : null}
+          { this.state.mode === -1 ? <div>
+            <div className="startText">Game Over! QAQ</div>
+            <input className="startText leaderBoardInput"
+              type="text"
+              ref={(instance) => { this.input = instance; }}
+              value={this.state.typeName}
+              placeholder={this.state.typeNameHolder}
+              onChange={this.handleSpace}
+              onBlur={this.fff}
+              autoFocus
+            />
+          </div> : null }
         </div>
       </div>
     );
@@ -183,6 +208,7 @@ class GameDisplay extends Component {
 
 GameDisplay.propTypes = {
   newGame: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default GameDisplay;
