@@ -150,7 +150,7 @@ class GameDisplay extends Component {
     this.setState({ index: index + 1 });
     const styleSheet = document.styleSheets[0];
     // styleSheet.deleteRule(0);
-    for (let i = 0; i < 5; i+= 1) {
+    for (let i = 0; i < 5; i += 1) {
       styleSheet.deleteRule(0);
     }
     // styleSheet.deleteRule(3);
