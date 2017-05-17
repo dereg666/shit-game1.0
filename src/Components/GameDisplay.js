@@ -15,6 +15,8 @@ class GameDisplay extends Component {
       index: 0,
       minSpan: 300,
       maxSpan: 550,
+      typeName: '',
+      typeNameHolder: 'Add name to LeaderBoard',
     };
     this.handleSpace = this.handleSpace.bind(this);
     this.playerMoving = this.playerMoving.bind(this);
@@ -24,6 +26,7 @@ class GameDisplay extends Component {
     this.handleBlockPosition = this.handleBlockPosition.bind(this);
     this.overGo = this.overGo.bind(this);
     this.underGo = this.underGo.bind(this);
+    this.fff = this.fff.bind(this);
   }
   componentWillMount() {
     window.onkeydown = this.handleSpace;
@@ -45,17 +48,29 @@ class GameDisplay extends Component {
     this.setState({ pillars: tempPillar });
     this.setState({ blocks: tempBlock });
   }
+  fff() {
+    this.input.focus();
+  }
   handleSpace(event) {
-    if (event.keyCode === 32) {
+    if (this.state.mode === -1) {
       // event.preventDefault();
-      if (this.state.mode === -1) {
-        event.preventDefault();
+      // const styleSheet = document.styleSheets[0];
+      // for (let i = 0; i < 3; i += 1) {
+      //   styleSheet.deleteRule(0);
+      // }
+      // this.props.newGame();
+      if (event.keyCode === 13) {
         const styleSheet = document.styleSheets[0];
         for (let i = 0; i < 3; i += 1) {
           styleSheet.deleteRule(0);
         }
         this.props.newGame();
-      } else if (this.state.mode === 0) {
+      } else {
+        this.setState({ typeName: event.target.value });
+      }
+    } else if (event.keyCode === 32) {
+      // event.preventDefault();
+      if (this.state.mode === 0) {
         this.setState({ mode: 1 });
         this[`childP${this.state.index}`].pillarGrow();
       } else if (this.state.mode === 1) {
@@ -175,6 +190,15 @@ class GameDisplay extends Component {
         <div>
           { this.state.mode === -1 ? <div>
             <div className="startText">Game Over! QAQ</div>
+            <input className="startText leaderBoardInput"
+              type="text"
+              ref={(instance) => { this.input = instance; }}
+              value={this.state.typeName}
+              placeholder={this.state.typeNameHolder}
+              onChange={this.handleSpace}
+              onBlur={this.fff}
+              autoFocus
+            />
           </div> : null }
         </div>
       </div>
