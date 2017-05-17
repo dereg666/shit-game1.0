@@ -21,6 +21,8 @@ class GameDisplay extends Component {
     this.addElement = this.addElement.bind(this);
     this.resetNew = this.resetNew.bind(this);
     this.handleBlockPosition = this.handleBlockPosition.bind(this);
+    this.overGo = this.overGo.bind(this);
+    this.underGo = this.underGo.bind(this);
   }
   componentWillMount() {
     window.onkeydown = this.handleSpace;
@@ -57,15 +59,31 @@ class GameDisplay extends Component {
     }
   }
   playerMoving() {
-    const dis = this.state.blocks[this.state.index + 1].leftPosition + this.state.blocks[this.state.index + 1].width - 110;
+    let dis = this.state.blocks[this.state.index + 1].leftPosition + this.state.blocks[this.state.index + 1].width - 110;
     const gap = this.state.blocks[this.state.index + 1].leftPosition - 107;
-    const win = this[`childP${this.state.index}`].determineWin(gap, dis + 3);
-    console.log(win);
+    const [win, pillarDis] = this[`childP${this.state.index}`].determineWin(gap, dis + 3);
+    // console.log(win);
+    // console.log(pillarDis);
     this[`childP${this.state.index}`].pillarStopRotate();
-    this.childPlayer.playerMoveForward(dis);
-    this.setState({ mode: 3 });
-    this.addElement();
-    setTimeout(this.wholeMoving, 1400);
+    if (win === 0) {
+      this.childPlayer.playerMoveForward(dis);
+      this.setState({ mode: 3 });
+      this.addElement();
+      setTimeout(this.wholeMoving, 1400);
+    } else {
+      dis = pillarDis + 37;
+      this.childPlayer.playerMoveForward(dis);
+      setTimeout((win > 0 ? () => this.overGo(dis) : () => this.underGo(dis)), 1400);
+    }
+  }
+  overGo(dis) {
+    this.childPlayer.playerFall(dis);
+    // setTimeout(this.gameOver(), 500);
+  }
+  underGo(dis) {
+    this.childPlayer.playerFall(dis);
+    // this[`childP${this.state.index}`].pillarFall();
+    // setTimeout(this.gameOver(), 500);
   }
   addElement() {
     const tempBlock = this.state.blocks;
@@ -127,9 +145,6 @@ class GameDisplay extends Component {
     return (
       <div className="gameDisplay">
         <div>hello world</div>
-        <Player
-          ref={(instance) => { this.childPlayer = instance; }}
-        />
         <div>
           {this.state.blocks.map((bl, id) => <Block
             ref={(instance) => { this[`childB${id}`] = instance; }}
@@ -146,6 +161,9 @@ class GameDisplay extends Component {
             leftPosition={pl.leftPosition}
           />)}
         </div>
+        <Player
+          ref={(instance) => { this.childPlayer = instance; }}
+        />
       </div>
     );
   }

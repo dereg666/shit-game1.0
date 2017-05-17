@@ -59,11 +59,11 @@ class Pillar extends Component {
   }
   determineWin(gap, max) {
     if (this.state.height > max) {
-      return 1;
+      return [1, this.state.height];
     } else if (this.state.height < gap) {
-      return -1;
+      return [-1, this.state.height];
     }
-    return 0;
+    return [0, this.state.height];
   }
   render() {
     return (
