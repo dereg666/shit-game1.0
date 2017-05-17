@@ -1,4 +1,8 @@
 .gameDisplay {
-  height: 90%;
-  width: 90%;
+  position: absolute;
+  left: 10%;
+  bottom: 0;
+  height: 100%;
+  width: 80%;
+  overflow: hidden;
 }

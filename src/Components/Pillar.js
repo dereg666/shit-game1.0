@@ -20,11 +20,11 @@ class Pillar extends Component {
   pillarGrow() {
     this.setState({ height: 5 });
     this.setState({ heightStart: Date.now() });
-    this.setState({ animation: 'pillarScale infinite 5s linear' });
+    this.setState({ animation: 'pillarScale infinite 3s linear' });
   }
   pillarRotate() {
-    this.setState({ height: (Date.now() - this.state.heightStart) / 10 % 500 });
-    this.setState({ animation: 'pillarRotate 1s linear forwards' });
+    this.setState({ height: (Date.now() - this.state.heightStart) / 5 % 600 });
+    this.setState({ animation: 'pillarRotate 0.8s linear forwards' });
     this.setState({ heightFixed: true });
     console.log(this.state.height);
   }
@@ -33,18 +33,33 @@ class Pillar extends Component {
     this.setState({ animation: '' });
     console.log(this.state.height);
   }
-  pillarMoving() {
-
+  pillarMoving(distance) {
+    // TODO
+    const styleSheet = document.styleSheets[0];
+    const keyid = 2;
+    // keyid > 0 ? styleSheet.insertRule(keyid - 1) : null;
+    const mykeyframe = `@-webkit-keyframes pillarMoveBack {
+      from {
+        transform-origin: bottom left;
+        transform: translate(${0}px) rotate(90deg);
+      }
+      to {
+        transform-origin: bottom left;
+        transform: translate(${-distance}px) rotate(90deg);
+      }
+    }`;
+    styleSheet.insertRule(mykeyframe, keyid);
+    this.setState({ animation: 'pillarMoveBack 0.5s linear forwards' });
   }
   render() {
     return (
       <div>
         <div>Hi this is a Pillar</div>
         <CssMotion
-          width="10"
+          width="6"
           height={this.state.height.toString()}
           bottom="100"
-          left="100"
+          left="107"
           color="rgb(142, 84, 21)"
           degree={this.state.degree.toString()}
           animation={this.state.animation}
@@ -54,7 +69,7 @@ class Pillar extends Component {
   }
 }
 
-Pillar.PropTypes = {
+Pillar.propTypes = {
   mode: PropTypes.number.isRequired,
   leftPosition: PropTypes.number.isRequired,
 };
