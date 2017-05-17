@@ -19,6 +19,7 @@ class Pillar extends Component {
     this.pillarMoving = this.pillarMoving.bind(this);
     this.pillarDoneMoving = this.pillarDoneMoving.bind(this);
     this.determineWin = this.determineWin.bind(this);
+    this.pillarFall = this.pillarFall.bind(this);
   }
   pillarGrow() {
     this.setState({ height: 5 });
@@ -64,6 +65,23 @@ class Pillar extends Component {
       return [-1, this.state.height];
     }
     return [0, this.state.height];
+  }
+  pillarFall() {
+    const styleSheet = document.styleSheets[0];
+    const keyid = 2;
+    // keyid > 0 ? styleSheet.insertRule(keyid - 1) : null;
+    const mykeyframe = `@-webkit-keyframes pillarMoveBack {
+      from {
+        transform-origin: bottom left;
+        transform: rotate(90deg);
+      }
+      to {
+        transform-origin: bottom left;
+        transform: rotate(180deg);
+      }
+    }`;
+    styleSheet.insertRule(mykeyframe, keyid);
+    this.setState({ animation: 'pillarMoveBack 0.5s linear forwards' });
   }
   render() {
     return (

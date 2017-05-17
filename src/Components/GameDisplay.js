@@ -82,7 +82,7 @@ class GameDisplay extends Component {
   }
   underGo(dis) {
     this.childPlayer.playerFall(dis);
-    // this[`childP${this.state.index}`].pillarFall();
+    this[`childP${this.state.index}`].pillarFall();
     // setTimeout(this.gameOver(), 500);
   }
   addElement() {
