@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import LeaderItem from './LeaderItem';
 import './GameDisplay.css';
 
 
@@ -20,6 +21,13 @@ class StartDisplay extends Component {
     return (
       <div className="startDisplay">
         <div className="startText"> Press Space to Start </div>
+        <div>
+          {this.props.leaders.map((ld, id) => <LeaderItem
+            rank={id + 1}
+            score={ld.Score}
+            name={ld.Name}
+          />)}
+        </div>
       </div>
     );
   }
@@ -27,6 +35,7 @@ class StartDisplay extends Component {
 
 StartDisplay.propTypes = {
   startGame: PropTypes.func.isRequired,
+  leaders: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default StartDisplay;

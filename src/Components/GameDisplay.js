@@ -53,18 +53,12 @@ class GameDisplay extends Component {
   }
   handleSpace(event) {
     if (this.state.mode === -1) {
-      // event.preventDefault();
-      // const styleSheet = document.styleSheets[0];
-      // for (let i = 0; i < 3; i += 1) {
-      //   styleSheet.deleteRule(0);
-      // }
-      // this.props.newGame();
       if (event.keyCode === 13) {
         const styleSheet = document.styleSheets[0];
         for (let i = 0; i < 3; i += 1) {
           styleSheet.deleteRule(0);
         }
-        this.props.newGame();
+        this.props.newGame(this.state.index, this.state.typeName);
       } else {
         this.setState({ typeName: event.target.value });
       }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CssMotion from './CssMotion';
-import './Block.css';
 
 class Block extends Component {
   constructor(props) {
