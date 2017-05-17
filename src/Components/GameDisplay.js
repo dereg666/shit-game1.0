@@ -14,6 +14,7 @@ class GameDisplay extends Component {
       blocks: [],
       index: 0,
       minSpan: 300,
+      maxSpan: 550,
     };
     this.handleSpace = this.handleSpace.bind(this);
     this.playerMoving = this.playerMoving.bind(this);
@@ -36,7 +37,7 @@ class GameDisplay extends Component {
       width: 110,
       leftPosition: 0,
     });
-    const tempWidth = Math.random() * 250 + this.state.minSpan;
+    const tempWidth = Math.random() * (this.state.maxSpan - this.state.minSpan) + this.state.minSpan;
     tempBlock.push({
       width: tempWidth,
       leftPosition: Math.random() * (550 - tempWidth) + 160,
@@ -90,7 +91,8 @@ class GameDisplay extends Component {
   addElement() {
     const tempBlock = this.state.blocks;
     const tempSpan = this.state.minSpan * 0.9;
-    const tempWidth = Math.random() * (550 - tempSpan) + tempSpan;
+    const tempMax = this.state.maxSpan * 0.97;
+    const tempWidth = Math.random() * (tempMax - tempSpan) + tempSpan;
     tempBlock.push({
       width: tempWidth,
       // leftPosition: Math.random() * (550 - tempWidth) + 160,
@@ -102,6 +104,7 @@ class GameDisplay extends Component {
     });
     this.setState({ blocks: tempBlock });
     this.setState({ minSpan: tempSpan });
+    this.setState({ maxSpan: tempMax });
     this.setState({ pillars: tempPillar });
   }
   wholeMoving() {
