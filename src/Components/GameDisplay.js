@@ -49,7 +49,11 @@ class GameDisplay extends Component {
     if (event.keyCode === 32) {
       // event.preventDefault();
       if (this.state.mode === -1) {
-        console.log('new Game');
+        event.preventDefault();
+        const styleSheet = document.styleSheets[0];
+        for (let i = 0; i < 5; i += 1) {
+          styleSheet.deleteRule(0);
+        }
         this.props.newGame();
       } else if (this.state.mode === 0) {
         this.setState({ mode: 1 });
@@ -65,8 +69,6 @@ class GameDisplay extends Component {
     let dis = this.state.blocks[this.state.index + 1].leftPosition + this.state.blocks[this.state.index + 1].width - 110;
     const gap = this.state.blocks[this.state.index + 1].leftPosition - 107;
     const [win, pillarDis] = this[`childP${this.state.index}`].determineWin(gap, dis + 3);
-    // console.log(win);
-    // console.log(pillarDis);
     this[`childP${this.state.index}`].pillarStopRotate();
     if (win === 0) {
       this.childPlayer.playerMoveForward(dis);
@@ -133,7 +135,7 @@ class GameDisplay extends Component {
     this.setState({ index: index + 1 });
     const styleSheet = document.styleSheets[0];
     // styleSheet.deleteRule(0);
-    for (let i = 0; i < 5; ++i) {
+    for (let i = 0; i < 5; i+= 1) {
       styleSheet.deleteRule(0);
     }
     // styleSheet.deleteRule(3);
@@ -149,7 +151,8 @@ class GameDisplay extends Component {
   render() {
     return (
       <div className="gameDisplay">
-        <div>Score: {this.state.index}</div>
+        <div className="scoreText">Times: {this.props.index}</div>
+        <div className="scoreText">Score: {this.state.index}</div>
         <div>
           {this.state.blocks.map((bl, id) => <Block
             ref={(instance) => { this[`childB${id}`] = instance; }}
@@ -169,6 +172,11 @@ class GameDisplay extends Component {
         <Player
           ref={(instance) => { this.childPlayer = instance; }}
         />
+        <div>
+          { this.state.mode === -1 ? <div>
+            <div className="startText">Game Over! QAQ</div>
+          </div> : null }
+        </div>
       </div>
     );
   }
@@ -176,6 +184,7 @@ class GameDisplay extends Component {
 
 GameDisplay.propTypes = {
   newGame: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default GameDisplay;
