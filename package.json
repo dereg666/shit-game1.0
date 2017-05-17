@@ -2,6 +2,7 @@
   "name": "shit-game",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://dereg666.github.io/shit-game1.0",
   "dependencies": {
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.0",
