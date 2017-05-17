@@ -51,7 +51,7 @@ class GameDisplay extends Component {
       if (this.state.mode === -1) {
         event.preventDefault();
         const styleSheet = document.styleSheets[0];
-        for (let i = 0; i < 5; i += 1) {
+        for (let i = 0; i < 3; i += 1) {
           styleSheet.deleteRule(0);
         }
         this.props.newGame();
