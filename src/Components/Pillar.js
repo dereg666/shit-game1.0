@@ -35,22 +35,23 @@ class Pillar extends Component {
     this.setState({ degree: '90' });
     this.setState({ animation: '' });
   }
-  pillarMoving(distance) {
+  pillarMoving(distance, keyid) {
     // TODO
     const styleSheet = document.styleSheets[0];
-    const keyid = 2;
     // keyid > 0 ? styleSheet.insertRule(keyid - 1) : null;
-    const mykeyframe = `@-webkit-keyframes pillarMoveBack {
-      from {
-        transform-origin: bottom left;
-        transform: translate(${0}px) rotate(90deg);
-      }
-      to {
-        transform-origin: bottom left;
-        transform: translate(${-distance}px) rotate(90deg);
-      }
-    }`;
-    styleSheet.insertRule(mykeyframe, keyid);
+    if (keyid > 0) {
+      const mykeyframe = `@-webkit-keyframes pillarMoveBack {
+        from {
+          transform-origin: bottom left;
+          transform: translate(${0}px) rotate(90deg);
+        }
+        to {
+          transform-origin: bottom left;
+          transform: translate(${-distance}px) rotate(90deg);
+        }
+      }`;
+      styleSheet.insertRule(mykeyframe, keyid);
+    }
     this.setState({ animation: 'pillarMoveBack 0.5s linear forwards' });
   }
   pillarDoneMoving(dis) {

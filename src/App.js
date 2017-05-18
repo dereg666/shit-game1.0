@@ -57,25 +57,27 @@ class App extends Component {
   newGame(score, name) {
     this.setState({ status: 0 });
     const tempGame = this.state.games;
-    const temp = {
-      Score: score,
-      Name: name,
-    };
-    fetch('/api/posting', {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(temp),
-    }).then((res) => {
-      if (res.status === 200) {
+    if (name.length > 0) {
+      const temp = {
+        Score: score,
+        Name: name,
+      };
+      fetch('/api/posting', {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(temp),
+      }).then((res) => {
+        if (res.status === 200) {
+          this.update();
+        }
+      }).catch((err) => {
+        console.err(err);
         this.update();
-      }
-    }).catch((err) => {
-      console.err(err);
-      this.update();
-    });
+      });
+    }
     delete tempGame[tempGame.length - 1];
     this.setState({ games: tempGame });
   }
