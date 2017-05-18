@@ -24,10 +24,10 @@ class Pillar extends Component {
   pillarGrow() {
     this.setState({ height: 5 });
     this.setState({ heightStart: Date.now() });
-    this.setState({ animation: 'pillarScale infinite 3s linear' });
+    this.setState({ animation: 'pillarScale infinite 2.4s linear' });
   }
   pillarRotate() {
-    this.setState({ height: (Date.now() - this.state.heightStart) / 5 % 600 });
+    this.setState({ height: (Date.now() - this.state.heightStart) / 4 % 600 });
     this.setState({ animation: 'pillarRotate 0.8s linear forwards' });
     this.setState({ heightFixed: true });
   }

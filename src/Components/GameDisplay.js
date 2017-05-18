@@ -101,8 +101,8 @@ class GameDisplay extends Component {
   }
   addElement() {
     const tempBlock = this.state.blocks;
-    const tempSpan = this.state.minSpan * 0.9;
-    const tempMax = this.state.maxSpan * 0.97;
+    const tempSpan = (this.state.minSpan - 20) * 0.9 + 20;
+    const tempMax = (this.state.maxSpan - 100) * 0.97 + 100;
     const tempWidth = Math.random() * (tempMax - tempSpan) + tempSpan;
     tempBlock.push({
       width: tempWidth,
