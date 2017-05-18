@@ -21,6 +21,12 @@ class StartDisplay extends Component {
     return (
       <div className="startDisplay">
         <div className="startText"> Press Space to Start </div>
+        <div className="leadTitle">Leader Board</div>
+        <div className="item">
+          <span className="leadRank">Rank</span>
+          <span className="leadName">Name</span>
+          <span className="leadScore itemHead">Score</span>
+        </div>
         <div>
           {this.props.leaders.map((ld, id) => <LeaderItem
             rank={id + 1}
