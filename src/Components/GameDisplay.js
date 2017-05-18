@@ -52,10 +52,11 @@ class GameDisplay extends Component {
     this.input.focus();
   }
   handleSpace(event) {
-    if (this.state.mode === -1) {
+    if (this.state.mode < 0) {
       if (event.keyCode === 13) {
         const styleSheet = document.styleSheets[0];
-        for (let i = 0; i < 3; i += 1) {
+        const styleS = (this.state.mode === -2 ? 2 : 3);
+        for (let i = 0; i < styleS; i += 1) {
           styleSheet.deleteRule(0);
         }
         this.props.newGame(this.state.index, this.state.typeName);
@@ -92,7 +93,7 @@ class GameDisplay extends Component {
   }
   overGo(dis) {
     this.childPlayer.playerFall(dis);
-    setTimeout(this.setState({ mode: -1 }), 500);
+    setTimeout(this.setState({ mode: -2 }), 500);
   }
   underGo(dis) {
     this.childPlayer.playerFall(dis);
@@ -185,7 +186,7 @@ class GameDisplay extends Component {
           ref={(instance) => { this.childPlayer = instance; }}
         />
         <div>
-          { this.state.mode === -1 ? <div>
+          { this.state.mode < 0 ? <div>
             <div className="startText">Game Over! QAQ</div>
             <input className="startText leaderBoardInput"
               type="text"
