@@ -6,28 +6,10 @@ import GameDisplay from './Components/GameDisplay';
 class App extends Component {
   constructor() {
     super();
-    const a = [
-      {
-        Score: 14,
-        Name: 'hello',
-      },
-      {
-        Score: 12,
-        Name: 'hedllo',
-      },
-      {
-        Score: 9,
-        Name: 'haello',
-      },
-      {
-        Score: 9,
-        Name: 'haeaaaaaaallo',
-      },
-    ];
     this.state = {
       status: 0,
       games: [],
-      leaderBoard: a,
+      leaderBoard: [],
     };
     this.startGame = this.startGame.bind(this);
     this.newGame = this.newGame.bind(this);
